@@ -8,12 +8,19 @@ WORKDIR /app
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
+
+
 # install node modules and build assets
 RUN npm install --production
 
 # Copy all files from current directory to working dir in image
 # Except the one defined in '.dockerignore'
 COPY . .
+
+
+
+#inject environement variable before build
+RUN cat env.properties >> ~/.bashrc && source ~/.bashrc && npm run build
 
 # Create production build of React App
 RUN npm run build
@@ -31,4 +38,4 @@ RUN rm -rf *
 COPY --from=builder /app/build .
 
 # Entry point when Docker container has started
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["npx", "react-inject-env", "set", "&&" ,"nginx", "-g", "daemon off;"]

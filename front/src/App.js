@@ -6,7 +6,7 @@ import History from './components/history.component'
 import { Route, HashRouter as Router, Switch } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Test from "./components/test";
+import Test from "./components/test.component";
 import { useCookies } from 'react-cookie';
 
 function App() {

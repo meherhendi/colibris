@@ -2,6 +2,7 @@ import React from "react";
 import FacebookLogin from 'react-facebook-login';
 import axios from "axios"
 import { withCookies } from 'react-cookie';
+import { env } from './env'
 
 class Home extends React.Component {
   constructor(props){
@@ -60,6 +61,21 @@ class Home extends React.Component {
                             New Body Energy
                           </strong>
                         </h1>
+                        <p style={{color: "red"}}>
+                          this is the environement variable: 
+                          {process.env.REACT_APP_USER_SERVICE_URI}
+                          {/* {process.env.SHELL} */}
+                          {/* <title>%REACT_APP_USER_SERVICE_URI%</title> */}
+                          <title>%SHELL%</title>
+                        </p>
+
+                        <p style={{color: "red"}}>
+                          this is the env.js variable: 
+                          {env.REACT_APP_USER_SERVICE_URI}
+                          {/* {process.env.SHELL} */}
+                          {/* <title>%REACT_APP_USER_SERVICE_URI%</title> */}
+                          <title>%SHELL%</title>
+                        </p>
 
                           {this.state.loggedIn? 
                           <div className="row">

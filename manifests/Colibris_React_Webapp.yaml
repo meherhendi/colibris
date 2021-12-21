@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: web-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: colibris-react-website
+    template:
+        metadata:
+            labels:
+                component: colibris-react-website
+        spec:
+            containers:
+                - name: colibris-react-website
+                  image: yarhemrabbi/colibris
+                  imagePullPolicy: Always #used for getting it to pull local images
+                  ports:
+                      - containerPort: 80
+                  volumeMounts:
+                      #override config.js file
+                      - name: config
+                        mountPath: "/"
+                        subPath: "env.properties"
+                  resources:
+                    requests:
+                      memory: "64Mi"
+                      cpu: "250m"
+                    limits:
+                      memory: "128Mi"
+                      cpu: "500m"
+            terminationGracePeriodSeconds: 10
+            volumes:
+                - name: config
+                  configMap:
+                      name: web-config
+                      items:
+                          - key: "web.properties"
+                            path: "env.properties"
